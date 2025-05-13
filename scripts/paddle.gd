@@ -2,6 +2,7 @@ extends Area2D
 
 @export var is_player_one = false
 
+var active = true
 var up_input = "paddle_up"
 var down_input = "paddle_down"
 
@@ -18,6 +19,8 @@ func _ready():
 		print(down_input)
 
 func _physics_process(delta: float) -> void:
+	if !active: return
+	
 	var move_dir = 0.0
 	
 	move_dir = Input.get_axis(up_input, down_input)
