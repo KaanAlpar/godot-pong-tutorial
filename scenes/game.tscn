@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5lq021rtreld"]
+
+[ext_resource type="Script" uid="uid://ctf37u0cuwrjc" path="res://scripts/game.gd" id="1_uwrxv"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_8cj0n"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_uwrxv")
+
+[node name="Background" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -10
+position = Vector2(641.5, 360.5)
+scale = Vector2(1301, 739)
+mesh = SubResource("QuadMesh_8cj0n")
+metadata/_edit_lock_ = true
