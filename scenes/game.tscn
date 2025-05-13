@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5lq021rtreld"]
+[gd_scene load_steps=4 format=3 uid="uid://c5lq021rtreld"]
 
 [ext_resource type="Script" uid="uid://ctf37u0cuwrjc" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://d4g4hmojb0o3j" path="res://scenes/paddle.tscn" id="2_yqjtg"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_8cj0n"]
 
@@ -14,3 +15,10 @@ position = Vector2(641.5, 360.5)
 scale = Vector2(1301, 739)
 mesh = SubResource("QuadMesh_8cj0n")
 metadata/_edit_lock_ = true
+
+[node name="PaddleOne" parent="." instance=ExtResource("2_yqjtg")]
+position = Vector2(50, 360)
+is_player_one = true
+
+[node name="PaddleTwo" parent="." instance=ExtResource("2_yqjtg")]
+position = Vector2(1230, 360)
