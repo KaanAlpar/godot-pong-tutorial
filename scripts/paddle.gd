@@ -17,8 +17,6 @@ func _ready():
 	if is_player_one == false:
 		up_input += "_two"
 		down_input += "_two"
-		print(up_input)
-		print(down_input)
 
 func _physics_process(delta: float) -> void:
 	if !active: return
