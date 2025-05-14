@@ -2,6 +2,8 @@ extends Area2D
 
 @export var is_player_one = false
 
+@onready var cshape = $CollisionShape2D
+
 var active = true
 var up_input = "paddle_up"
 var down_input = "paddle_down"
@@ -34,3 +36,7 @@ func _physics_process(delta: float) -> void:
 	global_position.y += velocity
 	global_position.y = clampf(global_position.y, 0, get_window().size.y)
 	
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Ball:
+		body.bounce_from_paddle(global_position.y, cshape.shape.get_rect().size.y)

@@ -1,4 +1,7 @@
 extends CharacterBody2D
+class_name Ball
+
+@export var speed_increase_per_bounce = 20
 
 var debug_mode = false
 
@@ -25,3 +28,10 @@ func _physics_process(delta: float) -> void:
 	if collided:
 		#move_dir.y *= -1
 		move_dir = move_dir.bounce(get_last_slide_collision().get_normal())
+
+func bounce_from_paddle(paddle_y_pos, paddle_height):
+	var new_move_dir_y = (global_position.y - paddle_y_pos) / (paddle_height/2.0)
+	move_dir.y = new_move_dir_y
+	move_dir.x *= -1
+	
+	speed += speed_increase_per_bounce

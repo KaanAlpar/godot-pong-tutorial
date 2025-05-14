@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 		ball.debug_mode = !ball.debug_mode
 		paddle_one.active = !ball.debug_mode
 		if !ball.debug_mode:
-			ball.move_dir = Vector2(1, 0.2)
+			ball.move_dir = Vector2(-1, 0)
 
 func _draw() -> void:
 	var line_start = Vector2(game_area_size.x/2.0, 0)
