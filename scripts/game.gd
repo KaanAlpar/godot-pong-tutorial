@@ -9,6 +9,7 @@ extends Node2D
 @onready var start_delay = $StartDelay
 
 @onready var hud = $CanvasLayer/HUD
+@onready var l2d = $BallMovementLine2D
 
 var game_area_size = Vector2(1280, 720)
 
@@ -21,6 +22,9 @@ func _ready():
 	
 	randomize()
 	reset_game()
+	
+	var test_points = [Vector2(200, 300), Vector2(300, 500), Vector2(1000.0, 500.0)]
+	update_l2d(test_points)
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("quit"):
@@ -58,10 +62,16 @@ func _on_detector_ball_out(is_left):
 	
 	hud.set_new_score(score)
 	
+	l2d.clear_points()
+	
 	if score.x >= final_score || score.y >= final_score:
 		reset_game()
 	else:
 		reset_round()
-	
-	
-	
+
+func update_l2d(points):
+	l2d.clear_points()
+	l2d.global_position = ball.global_position
+	for point in points:
+		var localized_point = l2d.to_local(point)
+		l2d.add_point(localized_point)

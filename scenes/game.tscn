@@ -30,6 +30,7 @@ is_player_one = true
 
 [node name="PaddleTwo" parent="." instance=ExtResource("2_yqjtg")]
 position = Vector2(1230, 360)
+is_ai = true
 
 [node name="Ball" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(640, 360)
@@ -49,3 +50,7 @@ position = Vector2(1290, 360)
 
 [node name="StartDelay" type="Timer" parent="."]
 one_shot = true
+
+[node name="BallMovementLine2D" type="Line2D" parent="."]
+width = 4.0
+default_color = Color(1, 0, 0, 1)

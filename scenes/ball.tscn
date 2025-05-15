@@ -6,7 +6,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7s4qf"]
 
-[node name="Ball" type="CharacterBody2D"]
+[node name="Ball" type="CharacterBody2D" groups=["balls"]]
 script = ExtResource("1_7s4qf")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]

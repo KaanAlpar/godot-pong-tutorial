@@ -1,5 +1,6 @@
 extends Area2D
 
+@export var is_ai = false
 @export var is_player_one = false
 
 @onready var cshape = $CollisionShape2D
@@ -12,6 +13,7 @@ const MAX_VELOCITY = 10.0
 var velocity = 0.0
 var acceleration = 50.0
 var slow_down_delta = 2.0
+var ai_target_ypos = 600.0
 
 func _ready():
 	if is_player_one == false:
@@ -23,7 +25,10 @@ func _physics_process(delta: float) -> void:
 	
 	var move_dir = 0.0
 	
-	move_dir = Input.get_axis(up_input, down_input)
+	if !is_ai:
+		move_dir = Input.get_axis(up_input, down_input)
+	else:
+		move_dir = get_ai_movement_dir()
 	
 	velocity += move_dir * acceleration * delta
 	if move_dir == 0.0:
@@ -33,8 +38,22 @@ func _physics_process(delta: float) -> void:
 	
 	global_position.y += velocity
 	global_position.y = clampf(global_position.y, 0, get_window().size.y)
-	
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Ball:
 		body.bounce_from_paddle(global_position.y, cshape.shape.get_rect().size.y)
+
+func get_ai_movement_dir(): # returns 0, -1, 1
+	var dist_to_target = abs(ai_target_ypos - global_position.y)
+	var accuracy_dist = 10.0
+	
+	var ball = get_tree().get_first_node_in_group("balls")
+	ai_target_ypos = ball.global_position.y
+	
+	if (dist_to_target > accuracy_dist):
+		if ai_target_ypos > global_position.y:
+			return 1
+		else:
+			return -1
+	else:
+		return 0
