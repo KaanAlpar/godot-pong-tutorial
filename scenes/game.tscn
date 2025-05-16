@@ -60,6 +60,7 @@ stream = ExtResource("6_u5sy4")
 
 [node name="PaddleOne" parent="Paddles" instance=ExtResource("2_yqjtg")]
 position = Vector2(50, 360)
+is_ai = true
 is_player_one = true
 
 [node name="PaddleTwo" parent="Paddles" instance=ExtResource("2_yqjtg")]
