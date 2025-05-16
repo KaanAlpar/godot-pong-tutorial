@@ -1,6 +1,10 @@
 extends CharacterBody2D
 class_name Ball
 
+signal bounced
+
+@onready var cshape = $CollisionShape2D
+
 @export var speed_increase_per_bounce = 20
 
 var active = false
@@ -38,6 +42,8 @@ func bounce_from_paddle(paddle_y_pos, paddle_height):
 	move_dir.x *= -1
 	
 	speed += speed_increase_per_bounce
+	
+	bounced.emit()
 
 func reset(reset_pos):
 	global_position = reset_pos
@@ -47,3 +53,6 @@ func reset(reset_pos):
 	move_dir.y = randf() * [-1, 1].pick_random()
 	
 	active = false
+
+func get_size():
+	return cshape.shape.get_rect().size

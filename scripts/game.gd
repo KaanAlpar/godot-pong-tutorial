@@ -19,12 +19,10 @@ var score = Vector2i.ZERO
 func _ready():
 	detector_left.ball_out.connect(_on_detector_ball_out)
 	detector_right.ball_out.connect(_on_detector_ball_out)
+	ball.bounced.connect(_on_ball_bounced)
 	
 	randomize()
 	reset_game()
-	
-	var test_points = [Vector2(200, 300), Vector2(300, 500), Vector2(1000.0, 500.0)]
-	update_l2d(test_points)
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("quit"):
@@ -36,6 +34,8 @@ func _process(delta: float) -> void:
 		paddle_one.active = !ball.debug_mode
 		if !ball.debug_mode:
 			ball.move_dir = Vector2(-1, 0)
+	if Input.is_action_just_pressed("show_lines"):
+		l2d.visible = !l2d.visible
 
 func _draw() -> void:
 	var line_start = Vector2(game_area_size.x/2.0, 0)
@@ -53,6 +53,7 @@ func reset_round():
 	start_delay.start()
 	await start_delay.timeout
 	ball.active = true
+	simulate_ball_movement()
 
 func _on_detector_ball_out(is_left):
 	if is_left:
@@ -75,3 +76,43 @@ func update_l2d(points):
 	for point in points:
 		var localized_point = l2d.to_local(point)
 		l2d.add_point(localized_point)
+
+func _on_ball_bounced():
+	simulate_ball_movement()
+
+func simulate_ball_movement(seconds: float = 3.0):
+	var ball_pos = ball.global_position
+	var move_dir_copy = ball.move_dir
+	var bs = ball.get_size()
+	
+	var top_limit = bs.y / 2.0
+	var bottom_limit = game_area_size.y - (bs.y / 2.0)
+	var left_limit = paddle_one.global_position.x + (bs.x / 2.0)
+	var right_limit = paddle_two.global_position.x - (bs.x / 2.0)
+	
+	var points = [ball_pos]
+	var dt = get_physics_process_delta_time()
+	
+	for i in range(0, 60 * seconds):
+		ball_pos += move_dir_copy * ball.speed * dt
+		
+		if ball_pos.x <= left_limit || ball_pos.x >= right_limit:
+			if (ball_pos.x <= left_limit) && (move_dir_copy.x > 0):
+				pass
+			elif (ball_pos.x >= right_limit) && (move_dir_copy.x < 0):
+				pass
+			else:
+				break
+		
+		if ball_pos.y <= top_limit || ball_pos.y >= bottom_limit:
+			move_dir_copy.y *= -1
+			points.append(ball_pos)
+	
+	points.append(ball_pos)
+	
+	if paddle_one.is_ai:
+		paddle_one.ai_target_ypos = ball_pos.y
+	if paddle_two.is_ai:
+		paddle_two.ai_target_ypos = ball_pos.y
+	
+	update_l2d(points)

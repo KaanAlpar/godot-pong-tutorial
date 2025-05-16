@@ -13,7 +13,7 @@ const MAX_VELOCITY = 10.0
 var velocity = 0.0
 var acceleration = 50.0
 var slow_down_delta = 2.0
-var ai_target_ypos = 600.0
+var ai_target_ypos = 360.0
 
 func _ready():
 	if is_player_one == false:
@@ -45,10 +45,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 func get_ai_movement_dir(): # returns 0, -1, 1
 	var dist_to_target = abs(ai_target_ypos - global_position.y)
-	var accuracy_dist = 10.0
-	
-	var ball = get_tree().get_first_node_in_group("balls")
-	ai_target_ypos = ball.global_position.y
+	var accuracy_dist = 25.0
 	
 	if (dist_to_target > accuracy_dist):
 		if ai_target_ypos > global_position.y:

@@ -52,5 +52,6 @@ position = Vector2(1290, 360)
 one_shot = true
 
 [node name="BallMovementLine2D" type="Line2D" parent="."]
+visible = false
 width = 4.0
 default_color = Color(1, 0, 0, 1)
