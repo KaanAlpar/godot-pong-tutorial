@@ -4,6 +4,8 @@ class_name Ball
 signal bounced
 
 @onready var cshape = $CollisionShape2D
+@onready var beep1 = $Beep1
+@onready var beep2 = $Beep2
 
 @export var speed_increase_per_bounce = 20
 
@@ -33,8 +35,8 @@ func _physics_process(delta: float) -> void:
 	var collided = move_and_slide()
 	
 	if collided:
-		#move_dir.y *= -1
 		move_dir = move_dir.bounce(get_last_slide_collision().get_normal())
+		play_beep()
 
 func bounce_from_paddle(paddle_y_pos, paddle_height):
 	var new_move_dir_y = (global_position.y - paddle_y_pos) / (paddle_height/2.0)
@@ -42,6 +44,8 @@ func bounce_from_paddle(paddle_y_pos, paddle_height):
 	move_dir.x *= -1
 	
 	speed += speed_increase_per_bounce
+	
+	play_beep()
 	
 	bounced.emit()
 
@@ -56,3 +60,8 @@ func reset(reset_pos):
 
 func get_size():
 	return cshape.shape.get_rect().size
+
+func play_beep():
+	var beep = [beep1, beep2].pick_random()
+	beep.pitch_scale = [0.8, 1.0, 1.2].pick_random()
+	beep.play()

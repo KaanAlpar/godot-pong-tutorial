@@ -1,15 +1,16 @@
 extends Node2D
 
-@onready var ball = $Ball
-@onready var paddle_one = $PaddleOne
-@onready var paddle_two = $PaddleTwo
+@onready var ball = $TheBall/Ball
+@onready var paddle_one = $Paddles/PaddleOne
+@onready var paddle_two = $Paddles/PaddleTwo
 
-@onready var detector_left = $DetectorLeft
-@onready var detector_right = $DetectorRight
+@onready var detector_left = $Environment/DetectorLeft
+@onready var detector_right = $Environment/DetectorRight
 @onready var start_delay = $StartDelay
 
 @onready var hud = $CanvasLayer/HUD
-@onready var l2d = $BallMovementLine2D
+@onready var l2d = $TheBall/BallMovementLine2D
+@onready var ball_out_sound = $TheBall/BallOutSound
 
 var game_area_size = Vector2(1280, 720)
 
@@ -62,7 +63,7 @@ func _on_detector_ball_out(is_left):
 		score.x += 1 # left scored
 	
 	hud.set_new_score(score)
-	
+	ball_out_sound.play()
 	l2d.clear_points()
 	
 	if score.x >= final_score || score.y >= final_score:
