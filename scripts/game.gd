@@ -38,11 +38,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("show_lines"):
 		l2d.visible = !l2d.visible
 
-func _draw() -> void:
-	var line_start = Vector2(game_area_size.x/2.0, 0)
-	var line_end = Vector2(game_area_size.x/2.0, game_area_size.y)
-	draw_dashed_line(line_start, line_end, Color.WHITE, 8.0, 12.0, false)
-
 func reset_game():
 	score = Vector2i.ZERO
 	hud.reset_score()

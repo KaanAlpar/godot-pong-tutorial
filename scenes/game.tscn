@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5lq021rtreld"]
+[gd_scene load_steps=10 format=3 uid="uid://c5lq021rtreld"]
 
 [ext_resource type="Script" uid="uid://ctf37u0cuwrjc" path="res://scripts/game.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://c3fvsxmoctjs6" path="res://scenes/hud.tscn" id="2_p57ef"]
 [ext_resource type="PackedScene" uid="uid://d4g4hmojb0o3j" path="res://scenes/paddle.tscn" id="2_yqjtg"]
+[ext_resource type="Script" uid="uid://dylp62g7hfs5f" path="res://scripts/dashed_line_drawer.gd" id="3_gee14"]
 [ext_resource type="PackedScene" uid="uid://babfb1yc444b8" path="res://scenes/ball.tscn" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://ccrshnwtxm40i" path="res://scenes/wall.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://cx4bndexy7pqh" path="res://scenes/detector.tscn" id="5_iywne"]
@@ -29,6 +30,9 @@ position = Vector2(641.5, 360.5)
 scale = Vector2(1301, 739)
 mesh = SubResource("QuadMesh_8cj0n")
 metadata/_edit_lock_ = true
+
+[node name="DashedLineDrawer" type="Node2D" parent="Environment"]
+script = ExtResource("3_gee14")
 
 [node name="WallUp" parent="Environment" instance=ExtResource("4_lbhrr")]
 position = Vector2(640, -10)
